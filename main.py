@@ -9,7 +9,7 @@ Objectives:
 '''
 
 try:
-    from cvelookup.db.functions import *
+    from cvelookup.db.dbutils import Dbutils
     from cvelookup.db.db_lookup import Database
     from colors import Color as col
     import sqlite3
@@ -54,6 +54,9 @@ class CveLookup:
         'exit': exit,
         'cls': clear
     }
+
+    def __init__(self):
+        utilobj = Dbutils()
 
     def prompt(self):
         """Displays prompt and handles all commands"""
