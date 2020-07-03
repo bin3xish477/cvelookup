@@ -21,7 +21,8 @@ except ImportError as err:
     print(err)
 
 class CveLookup:
-    def get_help():
+    @classmethod
+    def get_help(cls):
         """Print help message"""
         print(
         """
@@ -37,7 +38,8 @@ class CveLookup:
         """
         )
     
-    def clear():
+    @classmethod
+    def clear(cls):
         if os.name == 'nt':
             os.system('cls')
         else:
