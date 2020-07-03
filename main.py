@@ -21,8 +21,34 @@ except ImportError as err:
     print(err)
 
 class CveLookup:
-    @classmethod
-    def get_help(cls):
+    def __init__(self):
+        """
+        """
+        self.utilobj = Dbutils()
+        self.command_dict = {
+            'help': get_help,
+            'showcve': showcve,
+            'showall': showall,
+            'search': search,
+            'year': year,
+            'exit': exit,
+            'cls': clear
+        }
+
+    def prompt(self):
+        """Displays prompt and handles all commands"""
+        while True:
+            user_input = input(col.m+"cvelookup"+col.re+" > ").strip()
+            if user_input in self.command_dict.keys():
+                self.command_dict[user_input]()
+
+    def clear(self):
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
+
+    def get_help(self):
         """Print help message"""
         print(
         """
@@ -33,37 +59,11 @@ class CveLookup:
         showall  None                 : show CVE id's and descriptions
         search   [string]             : search CVE database for specific string
         year     (>|<|=|>=|<=) [year] : get CVE's for a particular year or range of years
+        update   None                 : update the cve database (will take a couple of seconds)
         exit     None                 : exit the program
         cls      None                 : clear screen
         """
         )
-    
-    @classmethod
-    def clear(cls):
-        if os.name == 'nt':
-            os.system('cls')
-        else:
-            os.system('clear')
-
-    command_dict = {
-        'help': get_help,
-        'showcve': showcve,
-        'showall': showall,
-        'search': search,
-        'year': year,
-        'exit': exit,
-        'cls': clear
-    }
-
-    def __init__(self):
-        utilobj = Dbutils()
-
-    def prompt(self):
-        """Displays prompt and handles all commands"""
-        while True:
-            user_input = input(col.m+"cvelookup"+col.re+" > ").strip()
-            if user_input in self.command_dict.keys():
-                self.command_dict[user_input]()
 
 def main():
     obj = CveLookup()
