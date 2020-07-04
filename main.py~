@@ -28,7 +28,7 @@ class CveLookup:
            #'year': self.year,
            'update': self.update,
            'exec': self.exec,
-           'exit': self.exit,
+           'exit': exit,
            'cls': self.clear
         }
 
@@ -53,14 +53,6 @@ class CveLookup:
             subprocess.run([*args])
         except:
             print("\n%s[*] Could not execute command: %s" % (fg(9), attr(0)), *args)
-    
-    def exit(self):
-        """Exit program"""
-        print("%s[*] Exiting Program...%s" % (fg(9), attr(0)))
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
 
     def clear(self):
         if os.name == 'nt':
@@ -94,8 +86,8 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print("\n%s[*] Exiting Program...%s" % (fg(9), attr(0)))
         try:
+            print("\n%s[*] Exiting Program...%s" % (fg(9), attr(0)))
             sys.exit(0)
         except SystemExit:
-            os._exit(0)
+            os.exit(0)
