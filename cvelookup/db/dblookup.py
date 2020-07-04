@@ -18,12 +18,14 @@ class Database(Dbutils):
 
     def showcve(self):
         """Retrieve all CVE id's from CVE database"""
+        cursor = self.conn.cursor()
         sqlqry = '''
 
         '''
 
     def showall(self):
         """Retrieves both CVE id's and corresponding descriptions from CVE database"""
+        cursor = self.conn.cursor()
         sqlqry = '''
 
         '''
