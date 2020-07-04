@@ -97,8 +97,4 @@ if __name__ == '__main__':
         try:
             sys.exit(0)
         except SystemExit:
-<<<<<<< HEAD
             os._exit(0)
-=======
-            os.exit(0)
->>>>>>> e2d2c3c2477e9066bcc9e5d487f5cf52cad3c8d3
