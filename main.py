@@ -11,12 +11,11 @@ Objectives:
 try:
     from cvelookup.db.dbutils import Dbutils
     from cvelookup.db.db_lookup import Database
-    from colors import Color as col
+    from colored import fg, attr
     import sqlite3
     import subprocess
     import sys
     import os
-    import readline
 except ImportError as err:
     print(err)
 
@@ -24,21 +23,22 @@ class CveLookup:
     def __init__(self):
         """
         """
-        self.utilobj = Dbutils()
+        #self.utilobj = Dbutils()
         self.command_dict = {
-            'help': get_help,
-            'showcve': showcve,
-            'showall': showall,
-            'search': search,
-            'year': year,
-            'exit': exit,
-            'cls': clear
+            'help': self.get_help
+           #'showcve': showcve,
+           #'showall': showall,
+           #'search': search,
+           #'year': year,
+           #'update': update,
+           #'exit': exit,
+           #'cls': clear
         }
 
     def prompt(self):
         """Displays prompt and handles all commands"""
         while True:
-            user_input = input(col.m+"cvelookup"+col.re+" > ").strip()
+            user_input = input(("%scvelookup%s" % (fg(99), attr(0))) + " > ").strip()
             if user_input in self.command_dict.keys():
                 self.command_dict[user_input]()
 
@@ -73,5 +73,5 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print(col.r+"\nExiting Program..." + col.re)
+        print("\n%sExiting Program...%s" % (fg(9), attr(0))
         sys.exit()
