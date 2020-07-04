@@ -64,14 +64,16 @@ class Dbutils:
 
     def deletedb(self):
         """Removes both csv file and database file for re-downloading"""
-        print("%s[+] Deleting old database files:%s" % (fg(105), attr(0)))
-        if os.path.exists(absolute+"/allitems.csv"):
-            print("\t- allitems.csv")
-            os.remove(absolute+"/allitems.csv")
+        if os.path.exists(absolute+"/allitems.csv") or os.path.exists(absolute+"/cve.db"):
+            print("%s[+] Deleting old database files:%s" % (fg(105), attr(0)))
+            if os.path.exists(absolute+"/allitems.csv"):
+                print("\t- allitems.csv")
+                os.remove(absolute+"/allitems.csv")
 
-        if os.path.exists(absolute+"/cve.db"):
-            print("\t- cve.db")
-            os.remove(absolute+"/cve.db")
+            if os.path.exists(absolute+"/cve.db"):
+                print("\t- cve.db")
+                os.remove(absolute+"/cve.db")
+        else: print("%s[+] No database files to delete%s" % (fg(105), attr(0)))
 
     def exists(self):
         """Check if the database exists. Will be utilized at installation because
