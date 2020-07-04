@@ -4,7 +4,6 @@ try:
     from cvelookup.db.dbutils import Dbutils
     from cvelookup.db.db_lookup import Database
     from colored import fg, attr
-    import sqlite3
     import subprocess
     import sys
     import os
