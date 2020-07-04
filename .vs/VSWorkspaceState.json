@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\cvelookup"
+    "\\cvelookup",
+    "\\cvelookup\\db",
+    "\\cvelookup\\utils"
   ],
+  "SelectedNode": "\\cvelookup\\db\\db_lookup.py",
   "PreviewInSolutionExplorer": false
 }

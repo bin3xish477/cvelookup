@@ -1,26 +1,28 @@
 '''
-Create database from csv file
+Create, update, and connect to database
 '''
 
 import sqlite3
 import os
 import requests
+from colored import fg, attr
+from time import sleep
 
 absolute = os.path.dirname(os.path.abspath(__file__))
 
 class Dbutils:
     def establish_connection(self):
-        conn = None
+        """Connects to the CVE database"""
+        self.conn = None
         try:
-            conn = sqlite3.connect(absolute+"/cve.db")
+            self.conn = sqlite3.connect(absolute+"/cve.db")
         except sqlite3.Error as err:
             print(err)
-        return conn
 
     def createdb(self):
         """Creates the CVE database if one does not already exists"""
-        conn = self.establish_connection()
-        c = conn.cursor()
+        self.establish_connection()
+        self.cursor = self.conn.cursor()
         create_table = '''CREATE TABLE CVE
         (
             line int,
@@ -29,16 +31,18 @@ class Dbutils:
         )
         '''
         try:
-            c.execute(create_table)
+            self.cursor.execute(create_table)
             with open(absolute+"/allitems.csv", 'rb') as f:
                 [next(f) for i in range(11)]
+                print("%s[+] Extracting data from new csv and converting into database%s" % (fg(130), attr(0)))
                 for i, line in enumerate(f):
                     sqlqry = '''INSERT INTO CVE VALUES (?,?,?)'''
                     line = str(line)
                     line = line.split(',')
-                    c.execute(sqlqry, (i, line[0][1:], line[2],))
-            conn.commit()
-            conn.close()
+                    self.cursor.execute(sqlqry, (i, line[0][2:], line[2],))
+            self.conn.commit()
+            self.conn.close()
+            print("%s[+] Database created%s" % (fg(142), attr(0)))
         except sqlite3.OperationalError:
             pass
 
@@ -49,8 +53,30 @@ class Dbutils:
 
         Data obtained from: https://cve.mitre.org/data/downloads/allitems.csv
         """
+        print("%s[+] Obtaining csv file from https://cve.mitre.org/data/downloads/allitems.csv %s" % (fg(163), attr(0)))
         allitems = requests.get("https://cve.mitre.org/data/downloads/allitems.csv")
-        print(allitems.text[:50])
-        # with open('allitems.csv', 'w') as f:
-        #     f.write(allitems.text)
-        # self.createdb()
+        
+        self.deletedb()
+        sleep(1)
+        with open(absolute+'/allitems.csv', 'wb') as f:
+            f.write(bytes(allitems.text, "utf-8"))
+        self.createdb()
+
+    def deletedb(self):
+        """Removes both csv file and database file for re-downloading"""
+        print("%s[+] Deleting old database files:%s" % (fg(105), attr(0)))
+        if os.path.exists(absolute+"/allitems.csv"):
+            print("\t- allitems.csv")
+            os.remove(absolute+"/allitems.csv")
+
+        if os.path.exists(absolute+"/cve.db"):
+            print("\t- cve.db")
+            os.remove(absolute+"/cve.db")
+
+    def exists(self):
+        """Check if the database exists. Will be utilized at installation because
+        database file will not have been created until running the `update` command.
+        """
+        if not os.path.exists(absolute+"/cve.db"):
+            print("%s[!] Must run `update` command to fetch and create database%s" % (fg(11), attr(0)))
+            pass
