@@ -3,6 +3,7 @@ Create, update, and connect to database
 '''
 
 import sqlite3
+import sys
 import os
 import requests
 from colored import fg, attr
@@ -46,8 +47,10 @@ class Dbutils:
         except sqlite3.OperationalError as err:
             print("\n%s[!] An error has occured: %s" % (fg(9), attr(0)), err)
             print("\n%s[*] Exiting Program...%s" % (fg(9), attr(0)))
-
-
+            try:
+                sys.exit(0)
+            except SystemExit:
+                os._exit(0)
 
     def updatedb(self):
         """Updates the database by removing the current one,
