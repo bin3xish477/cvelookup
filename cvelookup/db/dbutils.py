@@ -43,8 +43,11 @@ class Dbutils:
             self.conn.commit()
             self.conn.close()
             print("%s[+] Database created%s" % (fg(142), attr(0)))
-        except sqlite3.OperationalError:
-            pass
+        except sqlite3.OperationalError as err:
+            print("\n%s[!] An error has occured: %s" % (fg(9), attr(0)), err)
+            print("\n%s[*] Exiting Program...%s" % (fg(9), attr(0)))
+
+
 
     def updatedb(self):
         """Updates the database by removing the current one,
