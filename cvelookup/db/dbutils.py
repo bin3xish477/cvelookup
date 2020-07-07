@@ -19,6 +19,7 @@ class Dbutils:
             self.conn = sqlite3.connect(absolute+"/cve.db")
         except sqlite3.Error as err:
             print(err)
+        return self.conn
 
     def createdb(self):
         """Creates the CVE database if one does not already exists"""
@@ -41,6 +42,7 @@ class Dbutils:
                     line = str(line)
                     line = line.split(',')
                     self.cursor.execute(sqlqry, (i, line[0][2:], line[2],))
+
             self.conn.commit()
             self.conn.close()
             print("%s[+] Database created%s" % (fg(142), attr(0)))
@@ -64,6 +66,7 @@ class Dbutils:
         
         self.deletedb()
         sleep(1)
+
         with open(absolute+'/allitems.csv', 'wb') as f:
             f.write(bytes(allitems.text, "utf-8"))
         self.createdb()
