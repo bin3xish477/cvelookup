@@ -58,7 +58,7 @@ class Database(Dbutils):
             SELECT 
         '''
         results = cursor.execute(sqlqry)
-       for row in results:
+        for row in results:
             print("#######"*10)
             print(row[0], row[1], row[2][1:])
         print("#######"*10)

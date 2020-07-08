@@ -21,9 +21,9 @@ class CveLookup:
         """
         self.database_obj = Database()
         self.command_dict = {
-           'showcve': self.showcve,
-           'showall': self.showall,
-           'search': self.search,
+           'showcve': self.database_obj.show_cve,
+           'showall': self.database_obj.show_all,
+           'search': self.database_obj.search,
            'year': self.year,
            'update': self.update,
            'exec': self.exec,
