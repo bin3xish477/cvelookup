@@ -11,7 +11,7 @@ class Database(Dbutils):
         """Query the database for a particular string"""
         conn = super().establish_connection()
         cursor = conn.cursor()
-        # This SQL query is actually vulnerable to sql injection
+        # This SQL query is vulnerable to sql injection
         # but because this data is public there is no need to worry!
         # It was used because the sqlite3 parameterized queries was
         # not doing what I wanted it to do! :(
@@ -41,7 +41,7 @@ class Database(Dbutils):
         """Fetches cve's from a particular year or a range of years"""
         conn = super().establish_connection()
         cursor = conn.cursor()
-        # This SQL query is actually vulnerable to sql injection
+        # This SQL query is vulnerable to sql injection
         # but because this data is public there is no need to worry!
         # It was used because the sqlite3 parameterized queries was
         # not doing what I wanted it to do! :(
