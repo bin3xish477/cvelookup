@@ -83,7 +83,6 @@ class Database(Dbutils):
             FROM CVE;
         '''
         results = cursor.execute(sqlqry)
-        i = 0
         for row in results:
             print(("%s"+str(row[0])+"%s") % (fg(220), attr(0)), "|", ("%s"+row[1]+"%s") % (fg(196), attr(0)), "|", row[2][1:])
         conn.close()
