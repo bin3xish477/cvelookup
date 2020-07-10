@@ -21,7 +21,6 @@ class CveLookup:
         """
         self.database_obj = Database()
         self.command_dict = {
-           'showcve': self.database_obj.show_cve,
            'showall': self.database_obj.show_all,
            'search': self.database_obj.search,
            'year': self.year,
@@ -35,8 +34,11 @@ class CveLookup:
     def initiate(self):
         """Displays prompt and handles all commands"""
         while True:
-            user_input = input(("%scvelookup%s" % (fg(99), attr(0))) + " > ").strip().split()
-            cmd = user_input[0].strip()
+            try:
+                user_input = input(("%scvelookup%s" % (fg(99), attr(0))) + " > ").strip().split()
+                cmd = user_input[0].strip()
+            except IndexError: 
+                continue
             if cmd in self.command_dict.keys():
                 args = [arg.strip() for arg in user_input[1:]]
                 if len(args) == 0:
@@ -88,7 +90,6 @@ class CveLookup:
         Command  Arguments             Description
         ------   ---------             -----------
         help                          : display this help message
-        showcve                       : show all CVE id's
         showall                       : show CVE id's and descriptions
         search   [string]             : search CVE database for specific string
         year     >|<|=|>=|<= [year]   : get CVE's for a particular year or range of years
